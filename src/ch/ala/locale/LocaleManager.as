@@ -195,12 +195,12 @@ package ch.ala.locale
 			// File reference pointing to app://locale/[locale]/[bundleName].txt 
 			// (ie.: app://locale/en_US/localizedStrings.txt)
 			var file:File = File.applicationDirectory.resolvePath(
-				"locale/" + identifier.locale + "/" + identifier.bundleName + ".txt");
+				"locale/" + identifier.locale + "/" + identifier.bundleName);
 
 			// if file not found
 			if (!file.exists) 
 			{
-				log("File locale/" + identifier.locale + "/" + identifier.bundleName + ".txt does not exist.");
+				log("File locale/" + identifier.locale + "/" + identifier.bundleName + "does not exist.");
 				unqueueFirst(false);
 				return;
 			}
