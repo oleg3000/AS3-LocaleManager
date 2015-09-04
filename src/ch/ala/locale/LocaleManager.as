@@ -71,6 +71,7 @@ package ch.ala.locale
 		private var timeoutID:uint;
 		
 		private var _verbose:Boolean = false;
+		private var _localeFolder : String = "locale/";
 		
 		
 		/*  === Setup ===  */
@@ -194,8 +195,10 @@ package ch.ala.locale
 			
 			// File reference pointing to app://locale/[locale]/[bundleName].txt 
 			// (ie.: app://locale/en_US/localizedStrings.txt)
-			var file:File = File.applicationDirectory.resolvePath(
-				"locale/" + identifier.locale + "/" + identifier.bundleName);
+			var path : String = _localeFolder;
+			path += identifier.locale ? (identifier.locale + "/") : "";
+			path += identifier.bundleName;
+			var file:File = File.applicationDirectory.resolvePath(path);
 
 			// if file not found
 			if (!file.exists) 
@@ -283,7 +286,7 @@ package ch.ala.locale
 			for (var i:uint = 0; i < length; i++) 
 			{
 				if (_localeChain[i] in bundles 
-					&& bundleName in bundles[_localeChain[i]] 
+					&& bundleName in bundles[_localeChain[i]]
 					&& resourceName in bundles[_localeChain[i]][bundleName])
 				{
 					var value:String = bundles[_localeChain[i]][bundleName][resourceName];
@@ -321,6 +324,9 @@ package ch.ala.locale
 				trace("[LocaleManager] " + msg);
 		}
 
-
+		public function set localeFolder(value : String) : void
+		{
+			_localeFolder = value;
+		}
 	}
 }
