@@ -299,6 +299,37 @@ package ch.ala.locale
 			return "";
 		}
 
+        /**
+         * Returns array of getString() results for all the value keys starting from resourceName parameter
+         * @param bundleName
+         * @param resourceNameLeftChunk
+         * @param parameters
+         * @return
+         */
+		public function getStrings(bundleName:String, resourceNameLeftChunk:String, parameters:Array=null):Object
+		{
+			var result : Object = {};
+			var length:uint = _localeChain.length;
+			for (var i:uint = 0; i < length; i++)
+			{
+				if (_localeChain[i] in bundles
+						&& bundleName in bundles[_localeChain[i]])
+				{
+					var values:Dictionary = bundles[_localeChain[i]][bundleName];
+					for (var key : String in values)
+					{
+						const value : String = values[key] as String;
+						if (key.substr(0, resourceNameLeftChunk.length) == resourceNameLeftChunk)
+						{
+							if (parameters)
+								values[key] = StringUtil.substitute(value, parameters);
+							result[key] = value;
+						}
+					}
+				}
+			}
+			return result;
+		}
 		
 		/*  === Getter/Setter ===  */
 		
@@ -328,5 +359,6 @@ package ch.ala.locale
 		{
 			_localeFolder = value;
 		}
+
 	}
 }
